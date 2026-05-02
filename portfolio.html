@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Joshua — Social Media Strategist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #080A0F;
+    --surface: #0E1117;
+    --surface2: #141820;
+    --border: rgba(255,255,255,0.07);
+    --accent: #00E5A0;
+    --accent2: #0057FF;
+    --text: #F0F2F7;
+    --muted: #6B7280;
+    --card-glow: rgba(0, 229, 160, 0.05);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NOISE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(8,10,15,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 18px;
+    letter-spacing: -0.5px;
+    color: var(--text);
+  }
+
+  .nav-logo span { color: var(--accent); }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.2s;
+    letter-spacing: 0.3px;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-cta {
+    background: var(--accent);
+    color: #000 !important;
+    padding: 10px 22px;
+    border-radius: 6px;
+    font-weight: 600 !important;
+    font-size: 13px !important;
+    transition: opacity 0.2s !important;
+  }
+
+  .nav-cta:hover { opacity: 0.85; color: #000 !important; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 120px 40px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-glow {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(0,229,160,0.08) 0%, transparent 70%);
+    top: 50%;
+    right: -100px;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+
+  .hero-glow2 {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(0,87,255,0.06) 0%, transparent 70%);
+    bottom: 0;
+    left: 100px;
+    pointer-events: none;
+  }
+
+  .hero-content {
+    max-width: 1100px;
+    margin: 0 auto;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0,229,160,0.08);
+    border: 1px solid rgba(0,229,160,0.2);
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 8px 16px;
+    border-radius: 100px;
+    margin-bottom: 28px;
+  }
+
+  .hero-tag::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(42px, 6vw, 76px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -2px;
+    margin-bottom: 24px;
+    max-width: 800px;
+  }
+
+  .hero h1 .line2 { color: var(--accent); }
+
+  .hero-sub {
+    font-size: 18px;
+    color: var(--muted);
+    max-width: 520px;
+    line-height: 1.7;
+    margin-bottom: 40px;
+    font-weight: 300;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #000;
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 15px;
+    text-decoration: none;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--text);
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 15px;
+    text-decoration: none;
+    border: 1px solid var(--border);
+    transition: all 0.2s;
+  }
+
+  .btn-secondary:hover { border-color: rgba(255,255,255,0.2); background: var(--surface); }
+
+  /* STATS BAR */
+  .stats-bar {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 28px 40px;
+  }
+
+  .stats-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+
+  .stat-item {
+    text-align: center;
+    padding: 0 20px;
+    border-right: 1px solid var(--border);
+  }
+
+  .stat-item:last-child { border-right: none; }
+
+  .stat-number {
+    font-family: 'Syne', sans-serif;
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--accent);
+    letter-spacing: -1px;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 500;
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 100px 40px;
+  }
+
+  .section-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-tag {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+
+  .section-sub {
+    color: var(--muted);
+    font-size: 16px;
+    max-width: 500px;
+    line-height: 1.7;
+    margin-bottom: 60px;
+    font-weight: 300;
+  }
+
+  /* SERVICES */
+  #services { background: var(--surface); }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .service-card {
+    background: var(--surface);
+    padding: 36px 32px;
+    transition: background 0.2s;
+    position: relative;
+  }
+
+  .service-card:hover { background: var(--surface2); }
+
+  .service-icon {
+    width: 44px;
+    height: 44px;
+    background: rgba(0,229,160,0.08);
+    border: 1px solid rgba(0,229,160,0.15);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    font-size: 20px;
+  }
+
+  .service-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    letter-spacing: -0.3px;
+  }
+
+  .service-card p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  /* CASE STUDIES */
+  .cases-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+
+  .case-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 36px 32px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+
+  .case-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--card-glow);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .case-card:hover { border-color: rgba(0,229,160,0.2); transform: translateY(-4px); }
+  .case-card:hover::before { opacity: 1; }
+
+  .case-type {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: rgba(0,229,160,0.08);
+    border: 1px solid rgba(0,229,160,0.15);
+    padding: 5px 12px;
+    border-radius: 100px;
+    margin-bottom: 20px;
+  }
+
+  .case-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+  }
+
+  .case-desc {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 28px;
+    font-weight: 300;
+    line-height: 1.6;
+  }
+
+  .case-metrics {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .metric {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+
+  .metric-value {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--accent);
+    letter-spacing: -0.5px;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .metric-label {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    font-weight: 500;
+  }
+
+  .case-timeline {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* TESTIMONIALS */
+  #testimonials { background: var(--surface); }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px;
+  }
+
+  .testimonial-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    position: relative;
+    transition: border-color 0.3s;
+  }
+
+  .testimonial-card:hover { border-color: rgba(0,229,160,0.15); }
+
+  .quote-mark {
+    font-family: 'Syne', sans-serif;
+    font-size: 64px;
+    color: var(--accent);
+    opacity: 0.3;
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+
+  .testimonial-text {
+    font-size: 15px;
+    color: #B0B8C8;
+    line-height: 1.75;
+    margin-bottom: 28px;
+    font-style: italic;
+    font-weight: 300;
+  }
+
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .author-avatar {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: var(--surface2);
+    border: 2px solid var(--border);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 16px;
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .author-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .author-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+
+  .author-role {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 400;
+  }
+
+  /* CTA */
+  #contact {
+    background: var(--bg);
+    text-align: center;
+  }
+
+  .cta-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 80px 40px;
+    position: relative;
+    overflow: hidden;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .cta-box::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(0,229,160,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .cta-box h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    margin-bottom: 16px;
+    position: relative;
+  }
+
+  .cta-box p {
+    color: var(--muted);
+    font-size: 16px;
+    margin-bottom: 36px;
+    font-weight: 300;
+    position: relative;
+  }
+
+  .cta-links {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: relative;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 32px 40px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 16px;
+  }
+
+  .footer-logo span { color: var(--accent); }
+
+  footer p {
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  /* ANIMATIONS */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(24px);
+    animation: fadeUp 0.6s forwards;
+  }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-up:nth-child(1) { animation-delay: 0.1s; }
+  .fade-up:nth-child(2) { animation-delay: 0.2s; }
+  .fade-up:nth-child(3) { animation-delay: 0.3s; }
+  .fade-up:nth-child(4) { animation-delay: 0.4s; }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    .hero { padding: 100px 20px 60px; }
+    section { padding: 70px 20px; }
+    .stats-inner { grid-template-columns: repeat(2, 1fr); }
+    .stat-item { border-right: none; border-bottom: 1px solid var(--border); padding: 16px 0; }
+    .stat-item:nth-child(odd) { border-right: 1px solid var(--border); }
+    footer { flex-direction: column; gap: 12px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Joshua<span>.</span></div>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#work">Case Studies</a></li>
+    <li><a href="#testimonials">Testimonials</a></li>
+    <li><a href="#contact" class="nav-cta">Work with me</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-content">
+    <div class="hero-tag fade-up">Available for new projects</div>
+    <h1 class="fade-up">
+      Building social<br/>
+      <span class="line2">foundations</span> for<br/>
+      Web3 brands.
+    </h1>
+    <p class="hero-sub fade-up">
+      I help crypto and Web3 projects build the social media presence they need before the full marketing push begins. Organic growth, community, and content that converts.
+    </p>
+    <div class="hero-actions fade-up">
+      <a href="#contact" class="btn-primary">Start a project →</a>
+      <a href="#work" class="btn-secondary">View case studies</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-item">
+      <div class="stat-number">27k+</div>
+      <div class="stat-label">Followers Generated</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">100%</div>
+      <div class="stat-label">Peak Engagement Reached</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">4</div>
+      <div class="stat-label">Brands Scaled</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">3yr+</div>
+      <div class="stat-label">Web3 SMM Experience</div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-inner">
+    <div class="section-tag">What I do</div>
+    <h2 class="section-title">Services</h2>
+    <p class="section-sub">Everything your Web3 project needs to build a strong social foundation before you scale.</p>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">🎯</div>
+        <h3>SMM Services</h3>
+        <p>Full social media management for crypto and Web3 brands — content creation, posting, community engagement, and growth strategy across X, LinkedIn, and Telegram.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🔍</div>
+        <h3>Page Auditing</h3>
+        <p>A deep audit of your current social presence to identify gaps, missed opportunities, and quick wins. You get a clear action plan, not just a report.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">⚡</div>
+        <h3>Profile Optimization</h3>
+        <p>Transform your profiles into high-converting assets. Bio, banner, pinned content, and positioning — all aligned to your brand and target audience.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">💡</div>
+        <h3>Consulting</h3>
+        <p>Strategic advisory for founders and teams who need expert direction on their social media approach without full management. Ideal for pre-launch projects.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🎓</div>
+        <h3>Training</h3>
+        <p>Hands-on training for founders and internal teams on how to build and manage their own social presence — content strategy, platform nuances, and growth frameworks.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASE STUDIES -->
+<section id="work">
+  <div class="section-inner">
+    <div class="section-tag">Proof of work</div>
+    <h2 class="section-title">Case Studies</h2>
+    <p class="section-sub">Real results from real projects. No vanity metrics — just growth that moved the needle.</p>
+    <div class="cases-grid">
+
+      <div class="case-card">
+        <span class="case-type">Crypto Project</span>
+        <h3>Rally</h3>
+        <p class="case-desc">Pre-launch community building and X growth strategy for a Web3 project entering a competitive market.</p>
+        <div class="case-metrics">
+          <div class="metric">
+            <div class="metric-value">3.25×</div>
+            <div class="metric-label">Follower Growth</div>
+          </div>
+          <div class="metric">
+            <div class="metric-value">400→1.3k</div>
+            <div class="metric-label">Followers (2mo)</div>
+          </div>
+          <div class="metric">
+            <div class="metric-value">15→100%</div>
+            <div class="metric-label">Engagement Rate</div>
+          </div>
+          <div class="metric">
+            <div class="metric-value">900</div>
+            <div class="metric-label">Telegram Members</div>
+          </div>
+        </div>
+        <div class="case-timeline">⏱ 3 month engagement</div>
+      </div>
+
+      <div class="case-card">
+        <span class="case-type">Web3 Brand</span>
+        <h3>Minted</h3>
+        <p class="case-desc">Sustained organic growth and content strategy for a Web3 brand looking to double their audience and maximize engagement.</p>
+        <div class="case-metrics">
+          <div class="metric">
+            <div class="metric-value">2×</div>
+            <div class="metric-label">Follower Growth</div>
+          </div>
+          <div class="metric">
+            <div class="metric-value">2k→4k</div>
+            <div class="metric-label">Followers</div>
+          </div>
+          <div class="metric">
+            <div class="metric-value">30→100%</div>
+            <div class="metric-label">Engagement Rate</div>
+          </div>
+          <div class="metric">
+            <div class="metric-value">5 mo</div>
+            <div class="metric-label">Timeline</div>
+          </div>
+        </div>
+        <div class="case-timeline">⏱ 5 month engagement</div>
+      </div>
+
+      <div class="case-card">
+        <span class="case-type">Personal Brand · X</span>
+        <h3>Pav</h3>
+        <p class="case-desc">Personal brand growth strategy on X, transforming an established account into a high-engagement thought leadership presence.</p>
+        <div class="case-metrics">
+          <div class="metric">
+            <div class="metric-value">1.8×</div>
+            <div class="metric-label">Follower Growth</div>
+          </div>
+          <div class="metric">
+            <div class="metric-value">10k→18k</div>
+            <div class="metric-label">Followers</div>
+          </div>
+          <div class="metric">
+            <div class="metric-value">45→100%</div>
+            <div class="metric-label">Engagement Rate</div>
+          </div>
+          <div class="metric">
+            <div class="metric-value">9 mo</div>
+            <div class="metric-label">Timeline</div>
+          </div>
+        </div>
+        <div class="case-timeline">⏱ 9 month engagement</div>
+      </div>
+
+      <div class="case-card">
+        <span class="case-type">Personal Brand · LinkedIn</span>
+        <h3>Ibrahim</h3>
+        <p class="case-desc">Built a LinkedIn personal brand from zero to a highly engaged audience, establishing Ibrahim as a credible voice in his space.</p>
+        <div class="case-metrics">
+          <div class="metric">
+            <div class="metric-value">0→9k</div>
+            <div class="metric-label">Followers</div>
+          </div>
+          <div class="metric">
+            <div class="metric-value">100%</div>
+            <div class="metric-label">Engagement Rate</div>
+          </div>
+          <div class="metric">
+            <div class="metric-value">∞</div>
+            <div class="metric-label">Growth (from zero)</div>
+          </div>
+          <div class="metric">
+            <div class="metric-value">8 mo</div>
+            <div class="metric-label">Timeline</div>
+          </div>
+        </div>
+        <div class="case-timeline">⏱ 8 month engagement</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="section-inner">
+    <div class="section-tag">Social proof</div>
+    <h2 class="section-title">What clients say</h2>
+    <p class="section-sub">Don't take my word for it.</p>
+    <div class="testimonials-grid">
+
+      <div class="testimonial-card">
+        <div class="quote-mark">"</div>
+        <p class="testimonial-text">Your testimonial quote goes here. Replace this with the actual words from your client about their experience working with you and the results they achieved.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">A</div>
+          <div>
+            <div class="author-name">Client Name</div>
+            <div class="author-role">Role · Company</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="quote-mark">"</div>
+        <p class="testimonial-text">Your testimonial quote goes here. Replace this with the actual words from your client about their experience working with you and the results they achieved.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">B</div>
+          <div>
+            <div class="author-name">Client Name</div>
+            <div class="author-role">Role · Company</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="quote-mark">"</div>
+        <p class="testimonial-text">Your testimonial quote goes here. Replace this with the actual words from your client about their experience working with you and the results they achieved.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">C</div>
+          <div>
+            <div class="author-name">Client Name</div>
+            <div class="author-role">Role · Company</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="cta-box">
+      <h2>Ready to build your<br/><span style="color:var(--accent)">social foundation?</span></h2>
+      <p>Let's talk about your project and figure out the best path forward.</p>
+      <div class="cta-links">
+        <a href="mailto:your@email.com" class="btn-primary">Send me an email →</a>
+        <a href="https://twitter.com/yourhandle" target="_blank" class="btn-secondary">Find me on X</a>
+        <a href="https://linkedin.com/in/yourprofile" target="_blank" class="btn-secondary">LinkedIn</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Joshua<span>.</span></div>
+  <p>© 2026 · Social Media Strategist · Web3 & Crypto</p>
+</footer>
+
+</body>
+</html>
